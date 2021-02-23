@@ -18,7 +18,8 @@ public class ReadSecGovScheduler {
     private final ReadSecGovRSSFeed readSecGovRSSFeed;
     private final DiscordNotifier discordNotifier;
 
-    @Scheduled(cron = "0 59 8 * * MON-FRI")
+    //    @Scheduled(cron = "0 59 8 * * MON-FRI")
+    @Scheduled(initialDelay = 1000L)
     public void checkSecGovForLastCompanyFilling() {
         try {
             lastCompanyFilling = readSecGovRSSFeed.getLastCompanyFilling();
@@ -30,7 +31,8 @@ public class ReadSecGovScheduler {
         }
     }
 
-    @Scheduled(cron = "0 */1 9-23 * * MON-FRI")
+    //    @Scheduled(cron = "0 */1 9-23 * * MON-FRI")
+    @Scheduled(initialDelay = 10000L, fixedRate = 1000L)
     public void checkSecGovAndSendDiscordNotifications() {
         try {
             List<CompanyFillingEntity> latestCompanyFillings = readSecGovRSSFeed.getCompanyFillingsAfter(lastCompanyFilling);
